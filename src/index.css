@@ -1,0 +1,258 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color-scheme: light dark;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  code,
+  pre,
+  textarea.code-editor,
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tactile pop-on-hover and active spring feedback */
+@layer utilities {
+  .tactile-btn {
+    transition-property: transform, box-shadow, background-color, border-color, color, opacity;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .tactile-btn:hover:not(:disabled) {
+    transform: translateY(-1px) scale(1.04);
+  }
+
+  .tactile-btn:active:not(:disabled) {
+    transform: translateY(0) scale(0.96);
+  }
+
+  .tactile-btn:focus-visible {
+    outline: 2px solid rgb(99 102 241 / 0.85);
+    outline-offset: 2px;
+  }
+
+  .workspace-spring {
+    transition: all 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* Subtle Gemini-inspired iridescent gradient border/glow */
+.gemini-accent-gradient {
+  background-image: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+}
+
+.gemini-text-gradient {
+  background-image: linear-gradient(135deg, #2563eb 0%, #6366f1 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dark .gemini-text-gradient {
+  background-image: linear-gradient(135deg, #60a5fa 0%, #818cf8 50%, #c084fc 100%);
+}
+
+/* Clean custom scrollbars for code & drawer panes */
+.code-scroll::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.code-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.code-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
+}
+
+.code-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.55);
+}
+
+/* Gentle atmospheric aurora drift behind workspace content */
+@keyframes autopatch-aurora-drift-a {
+  0% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, 3%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+}
+
+@keyframes autopatch-aurora-drift-b {
+  0% {
+    transform: translate3d(3%, 2%, 0) scale(1.03);
+  }
+  50% {
+    transform: translate3d(-4%, -3%, 0) scale(0.98);
+  }
+  100% {
+    transform: translate3d(3%, 2%, 0) scale(1.03);
+  }
+}
+
+.aurora-layer-a {
+  animation: autopatch-aurora-drift-a 26s ease-in-out infinite;
+}
+
+.aurora-layer-b {
+  animation: autopatch-aurora-drift-b 32s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-layer-a,
+  .aurora-layer-b {
+    animation: none;
+    transform: none;
+  }
+
+  .tactile-btn,
+  .tactile-btn:hover:not(:disabled),
+  .tactile-btn:active:not(:disabled),
+  .workspace-spring {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* Prism.js Syntax Highlighting Token Theme (Light & Dark Glass) */
+.prism-syntax {
+  color: #1e293b;
+  tab-size: 4;
+  -moz-tab-size: 4;
+}
+
+.dark .prism-syntax {
+  color: #F4F7FF;
+}
+
+.prism-syntax .token.comment,
+.prism-syntax .token.prolog,
+.prism-syntax .token.doctype,
+.prism-syntax .token.cdata {
+  color: #64748b;
+  font-style: italic;
+}
+
+.dark .prism-syntax .token.comment,
+.dark .prism-syntax .token.prolog,
+.dark .prism-syntax .token.doctype,
+.dark .prism-syntax .token.cdata {
+  color: #7D89A8;
+}
+
+.prism-syntax .token.keyword,
+.prism-syntax .token.directive,
+.prism-syntax .token.control {
+  color: #4f46e5;
+  font-weight: 500;
+}
+
+.dark .prism-syntax .token.keyword,
+.dark .prism-syntax .token.directive,
+.dark .prism-syntax .token.control {
+  color: #B9AEFF;
+}
+
+.prism-syntax .token.string,
+.prism-syntax .token.triple-quoted-string,
+.prism-syntax .token.char,
+.prism-syntax .token.attr-value,
+.prism-syntax .token.regex {
+  color: #059669;
+}
+
+.dark .prism-syntax .token.string,
+.dark .prism-syntax .token.triple-quoted-string,
+.dark .prism-syntax .token.char,
+.dark .prism-syntax .token.attr-value,
+.dark .prism-syntax .token.regex {
+  color: #51D6A2;
+}
+
+.prism-syntax .token.function,
+.prism-syntax .token.method {
+  color: #0284c7;
+}
+
+.dark .prism-syntax .token.function,
+.dark .prism-syntax .token.method {
+  color: #50D7E6;
+}
+
+.prism-syntax .token.class-name,
+.prism-syntax .token.builtin {
+  color: #0e7490;
+}
+
+.dark .prism-syntax .token.class-name,
+.dark .prism-syntax .token.builtin {
+  color: #7AE9F5;
+}
+
+.prism-syntax .token.number,
+.prism-syntax .token.boolean,
+.prism-syntax .token.constant,
+.prism-syntax .token.symbol {
+  color: #b45309;
+}
+
+.dark .prism-syntax .token.number,
+.dark .prism-syntax .token.boolean,
+.dark .prism-syntax .token.constant,
+.dark .prism-syntax .token.symbol {
+  color: #FFCA70;
+}
+
+.prism-syntax .token.decorator,
+.prism-syntax .token.annotation,
+.prism-syntax .token.attribute,
+.prism-syntax .token.variable {
+  color: #be123c;
+}
+
+.dark .prism-syntax .token.decorator,
+.dark .prism-syntax .token.annotation,
+.dark .prism-syntax .token.attribute,
+.dark .prism-syntax .token.variable {
+  color: #FF8AA0;
+}
+
+.prism-syntax .token.operator,
+.prism-syntax .token.punctuation {
+  color: #475569;
+}
+
+.dark .prism-syntax .token.operator,
+.dark .prism-syntax .token.punctuation {
+  color: #A6B0C8;
+}
+
